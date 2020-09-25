@@ -1,11 +1,12 @@
 const firstRow = 'мама мыла раму';
 const secondRow = 'собака друг человека';
 
+let letter = prompt('Введите букву');
 
 function getCount (row){
     let count = 0;
     for (let i=0; i<row.length;i++){
-        if (row.charAt(i) == 'а'){
+        if (row.charAt(i) === letter){
             count++
         }
     }
@@ -20,4 +21,4 @@ function getRow(){
    return firstCount > secondCount ? firstRow : secondRow
 }
 
-console.log(getRow(firstRow,secondRow));
+alert(getRow(firstRow,secondRow));
