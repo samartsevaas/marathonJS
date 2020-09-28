@@ -3,7 +3,11 @@ const kind = {
     healthDefault: 100,
     damage: 100,
     elHP: document.querySelector('#health-character'),
-    elProgress: document.querySelector('#progressbar-character')
+    elProgress: document.querySelector('#progressbar-character'),
+    changeLifes(count) { return changeLifes.call(this, count)},
+    lifeProgress() { return  lifeProgress.call(this) },
+    lifeProgressScale() { return lifeProgressScale.call(this)},
+    progressState() {return progressState.call(this)}
 }
 
 const enemy = {
@@ -11,47 +15,48 @@ const enemy = {
     healthDefault: 100,
     damage: 100,
     elHP: document.querySelector('#health-enemy'),
-    elProgress: document.querySelector('#progressbar-enemy')
+    elProgress: document.querySelector('#progressbar-enemy'),
+    changeLifes(count) { return changeLifes.call(this, count)},
+    lifeProgress() { return  lifeProgress.call(this) },
+    lifeProgressScale() { return lifeProgressScale.call(this)},
+    progressState() {return progressState.call(this)}
 }
 
 let btn = document.querySelector('#btn-kick');
 btn.addEventListener('click', function(){
-    changeLifes(randomCount(30), enemy);
-    changeLifes(randomCount(30), kind)
+    kind.changeLifes(randomCount(30));
+    enemy.changeLifes(randomCount(30));
 })
 
 function init (){
-    lifeProgress(enemy);
-    lifeProgress(kind);
-    lifeProgressScale(enemy);
-    lifeProgressScale(kind);
+    progressState(),
     randomCount();
 }
 
-function progressState(person){
-    lifeProgress(person);
-    lifeProgressScale(person)
+function progressState(){
+    kind.lifeProgress();
+    enemy.lifeProgress();
+    kind.lifeProgressScale(),
+    enemy.lifeProgressScale()
 }
 
-function lifeProgress (person){
-   person.elHP.innerText = person.healthDefault + '/' + person.damage;
+function lifeProgress (){
+   this.elHP.innerText = this.healthDefault + '/' + this.damage;
 }
 
-function lifeProgressScale (person){
-    person.elProgress.style.width = person.damage + "%";
+function lifeProgressScale (){
+    this.elProgress.style.width = this.damage + "%";
  }
 
-function changeLifes (count, person){
-    if (person.damage < count){
-        person.damage = 0
-        alert (person.name + ' ' + 'проиграл')
+function changeLifes (count){
+    if (this.damage < count){
+        this.damage = 0
+        alert (this.name + ' ' + 'проиграл')
         btn.disabled = true
     } else{
-        person.damage -=count;
+        this.damage -=count;
     }
-
-    
-    progressState(person);
+    this.progressState();
 }
 
 function randomCount (num){
