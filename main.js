@@ -1,7 +1,7 @@
 const character = {
     name: 'Pikachu',
-    healthDefault: 100,
-    damage: 100,
+    healthDefault: 200,
+    damage: 200,
     elHP: document.querySelector('#health-character'),
     elProgress: document.querySelector('#progressbar-character'),
     lifeProgressScale: lifeProgressScale,
@@ -12,8 +12,8 @@ const character = {
 
 const enemy = {
     name: 'Charmander',
-    healthDefault: 100,
-    damage: 100,
+    healthDefault: 200,
+    damage: 200,
     elHP: document.querySelector('#health-enemy'),
     elProgress: document.querySelector('#progressbar-enemy'),
     lifeProgressScale: lifeProgressScale,
@@ -44,7 +44,8 @@ function lifeProgress (){
 }
 
 function lifeProgressScale (){
-    this.elProgress.style.width = this.damage + "%";
+    let result = this.damage/this.healthDefault * 100;
+    this.elProgress.style.width = result + "%";
  }
 
 function changeLifes (count){
