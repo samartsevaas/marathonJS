@@ -1,57 +1,62 @@
-const kind = {
+const character = {
     name: 'Pikachu',
-    healthDefault: 100,
-    damage: 100,
+    healthDefault: 200,
+    damage: 200,
     elHP: document.querySelector('#health-character'),
-    elProgress: document.querySelector('#progressbar-character')
+    elProgress: document.querySelector('#progressbar-character'),
+    lifeProgressScale: lifeProgressScale,
+    lifeProgress: lifeProgress,
+    changeLifes: changeLifes,
+    progressState: progressState
 }
 
 const enemy = {
     name: 'Charmander',
-    healthDefault: 100,
-    damage: 100,
+    healthDefault: 200,
+    damage: 200,
     elHP: document.querySelector('#health-enemy'),
-    elProgress: document.querySelector('#progressbar-enemy')
+    elProgress: document.querySelector('#progressbar-enemy'),
+    lifeProgressScale: lifeProgressScale,
+    lifeProgress: lifeProgress,
+    changeLifes: changeLifes,
+    progressState: progressState
 }
 
 let btn = document.querySelector('#btn-kick');
 btn.addEventListener('click', function(){
-    changeLifes(randomCount(30), enemy);
-    changeLifes(randomCount(30), kind)
+    character.changeLifes(randomCount(30));
+    enemy.changeLifes(randomCount(30));
 })
 
 function init (){
-    lifeProgress(enemy);
-    lifeProgress(kind);
-    lifeProgressScale(enemy);
-    lifeProgressScale(kind);
+    progressState.call(enemy);
+    progressState.call(character);
     randomCount();
 }
 
-function progressState(person){
-    lifeProgress(person);
-    lifeProgressScale(person)
+function progressState(){
+    this.lifeProgress();
+    this.lifeProgressScale()
 }
 
-function lifeProgress (person){
-   person.elHP.innerText = person.healthDefault + '/' + person.damage;
+function lifeProgress (){
+   this.elHP.innerText = this.healthDefault + '/' + this.damage;
 }
 
-function lifeProgressScale (person){
-    person.elProgress.style.width = person.damage + "%";
+function lifeProgressScale (){
+    let result = this.damage/this.healthDefault * 100;
+    this.elProgress.style.width = result + "%";
  }
 
-function changeLifes (count, person){
-    if (person.damage < count){
-        person.damage = 0
-        alert (person.name + ' ' + 'проиграл')
+function changeLifes (count){
+    if (this.damage < count){
+        this.damage = 0
+        alert (this.name + ' ' + 'проиграл')
         btn.disabled = true
     } else{
-        person.damage -=count;
+        this.damage -=count;
     }
-
-    
-    progressState(person);
+    this.progressState();
 }
 
 function randomCount (num){
