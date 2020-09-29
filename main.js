@@ -1,13 +1,13 @@
-const kind = {
+const character = {
     name: 'Pikachu',
     healthDefault: 100,
     damage: 100,
     elHP: document.querySelector('#health-character'),
     elProgress: document.querySelector('#progressbar-character'),
-    changeLifes(count) { return changeLifes.call(this, count)},
-    lifeProgress() { return  lifeProgress.call(this) },
-    lifeProgressScale() { return lifeProgressScale.call(this)},
-    progressState() {return progressState.call(this)}
+    lifeProgressScale: lifeProgressScale,
+    lifeProgress: lifeProgress,
+    changeLifes: changeLifes,
+    progressState: progressState
 }
 
 const enemy = {
@@ -16,28 +16,27 @@ const enemy = {
     damage: 100,
     elHP: document.querySelector('#health-enemy'),
     elProgress: document.querySelector('#progressbar-enemy'),
-    changeLifes(count) { return changeLifes.call(this, count)},
-    lifeProgress() { return  lifeProgress.call(this) },
-    lifeProgressScale() { return lifeProgressScale.call(this)},
-    progressState() {return progressState.call(this)}
+    lifeProgressScale: lifeProgressScale,
+    lifeProgress: lifeProgress,
+    changeLifes: changeLifes,
+    progressState: progressState
 }
 
 let btn = document.querySelector('#btn-kick');
 btn.addEventListener('click', function(){
-    kind.changeLifes(randomCount(30));
+    character.changeLifes(randomCount(30));
     enemy.changeLifes(randomCount(30));
 })
 
 function init (){
-    progressState(),
+    progressState.call(enemy);
+    progressState.call(character);
     randomCount();
 }
 
 function progressState(){
-    kind.lifeProgress();
-    enemy.lifeProgress();
-    kind.lifeProgressScale(),
-    enemy.lifeProgressScale()
+    this.lifeProgress();
+    this.lifeProgressScale()
 }
 
 function lifeProgress (){
