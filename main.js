@@ -1,13 +1,17 @@
+function btn () {
+    re
+}
+
 const character = {
     name: 'Pikachu',
     healthDefault: 200,
     damage: 200,
     elHP: document.querySelector('#health-character'),
     elProgress: document.querySelector('#progressbar-character'),
-    lifeProgressScale: lifeProgressScale,
-    lifeProgress: lifeProgress,
-    changeLifes: changeLifes,
-    progressState: progressState
+    lifeProgressScale,
+    lifeProgress,
+    changeLifes,
+    progressState
 }
 
 const enemy = {
@@ -16,16 +20,18 @@ const enemy = {
     damage: 200,
     elHP: document.querySelector('#health-enemy'),
     elProgress: document.querySelector('#progressbar-enemy'),
-    lifeProgressScale: lifeProgressScale,
-    lifeProgress: lifeProgress,
-    changeLifes: changeLifes,
-    progressState: progressState
+    lifeProgressScale,
+    lifeProgress,
+    changeLifes,
+    progressState
 }
 
 let btn = document.querySelector('#btn-kick');
 btn.addEventListener('click', function(){
-    character.changeLifes(randomCount(30));
-    enemy.changeLifes(randomCount(30));
+    const {changeLifes: changeLifesCharacter} = character;
+    const {changeLifes: changeLifesEnemy} = enemy;
+    changeLifesCharacter.call(character,randomCount(30));
+    changeLifesEnemy.call(enemy,randomCount(30));
 })
 
 function init (){
