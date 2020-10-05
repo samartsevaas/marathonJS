@@ -1,5 +1,21 @@
-let btn = document.querySelector('#btn-kick');
+let btnCharacter = document.querySelector('#btn-character');
+let btnEnemy = document.querySelector('#btn-enemy');
 let logInfo = document.querySelector('#logs');
+
+const END_COUNT = 2;
+
+
+const getClicks = (endCount = END_COUNT) => {
+    let clicks = 0;
+    return () => {
+        if(clicks < endCount) {
+            console.log(`Осталось: ${endCount - clicks}`);
+            clicks++;
+        }
+        return clicks;
+    };
+}
+
 const character = {
     name: 'Pikachu',
     healthDefault: 200,
@@ -10,7 +26,9 @@ const character = {
     lifeProgress,
     changeLifes,
     progressState,
-    remainLifes: null
+    remainLifes: null,
+    counter: 0,
+    getClick: getClicks(),
 }
 
 const enemy = {
@@ -23,17 +41,21 @@ const enemy = {
     lifeProgress,
     changeLifes,
     progressState,
-    remainLifes: null
+    remainLifes: null,
+    counter: 0,
+    getClick: getClicks(),
 }
 
-btn.addEventListener('click', function(){
-    const {changeLifes: changeLifesCharacter} = character;
+btnCharacter.addEventListener('click', function(){
     const {changeLifes: changeLifesEnemy} = enemy;
-    changeLifesCharacter.call(character,randomCount(30));
-    changeLifesEnemy.call(enemy,randomCount(30));
-
-    
+    changeLifesEnemy.call(enemy,randomCount(80));
 })
+
+btnEnemy.addEventListener('click', function(){
+    const {changeLifes: changeLifesCharacter} = character;
+    changeLifesCharacter.call(character,randomCount(80));
+})
+
 
 function init (){
     progressState.call(enemy);
@@ -58,20 +80,24 @@ function lifeProgressScale (){
  }
 
 function changeLifes (count){
-    if (this.damage < count){
+    this.counter = this.getClick();
+    const isEnemy = this === enemy;
+    if (this.damage < count || this.counter >= END_COUNT){
         this.damage = 0
         alert (this.name + ' ' + 'проиграл')
-        btn.disabled = true
+        btnEnemy.disabled = true;
+        btnCharacter.disabled = true
+        console.log(`У ${enemy.name} было: ${enemy.counter} кликов`);
+        console.log(`У ${character.name} было: ${character.counter} кликов`);
     } else{
         this.damage -=count;
     }
     this.progressState();
-    const log = this === enemy ? getLogs (this, character, count) : getLogs(this, enemy, count);
+    const log = isEnemy ? getLogs (this, character, count) : getLogs(this, enemy, count);
 
         let p = document.createElement('p');
         p.innerHTML = `${log}`;
         logInfo.insertBefore(p,logInfo.children[0]);
-    
 }
 
 
