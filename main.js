@@ -1,27 +1,28 @@
 import {player1, player2} from "./persons.js";
 import {randomCount} from "./utils.js";
-import {getLogs} from "./info_logs.js";
+import {getClicks, getLogs} from "./info_logs.js";
 import {END_COUNT} from "./consts.js";
 
-let btnCharacter = document.querySelector('#btn-character');
-let btnEnemy = document.querySelector('#btn-enemy');
-let logInfo = document.querySelector('#logs');
 
-btnCharacter.addEventListener('click', function(){
-    const {changeLifes: changeLifesEnemy} = player2;
-    changeLifesEnemy.call(player2,randomCount(80), function(count){
-        console.log('Some change after change HP', count);
-        console.log(getLogs(player1,player2,count));
-    });
-})
+// let btnCharacter = document.querySelector('#btn-player1');
+// let btnEnemy = document.querySelector('#btn-player2');
 
-btnEnemy.addEventListener('click', function(){
-    const {changeLifes: changeLifesCharacter} = player1;
-    changeLifesCharacter.call(player1,randomCount(80), function(count){
-        console.log('Some change after change HP', count);
-        console.log(getLogs(player1,player2,count));
-    });
-})
+
+// btnCharacter.addEventListener('click', function(){
+//     const {changeLifes: changeLifesEnemy} = player2;
+//     changeLifesEnemy.call(player2,randomCount(80), function(count){
+//         console.log('Some change after change HP', count);
+//         console.log(getLogs(player1,player2,count));
+//     });
+// })
+
+// btnEnemy.addEventListener('click', function(){
+//     const {changeLifes: changeLifesCharacter} = player1;
+//     changeLifesCharacter.call(player1,randomCount(80), function(count){
+//         console.log('Some change after change HP', count);
+//         console.log(getLogs(player1,player2,count));
+//     });
+// })
 
 function init (){
     progressState.call(player2);
@@ -35,7 +36,7 @@ export function progressState(){
 }
 
 export function lifeProgress (){
-    this.remainLifes = this.hp.healthDefault + '/' + this.hp.damage;
+    this.remainLifes = this + '/' + this.hp.damage;
    this.elHP.innerText = this.remainLifes;
 }
 
