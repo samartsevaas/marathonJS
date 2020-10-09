@@ -1,27 +1,49 @@
-import {player1, player2} from "./persons.js";
+import {player1, player2, Pokemon, pikachu} from "./persons.js";
 import {randomCount} from "./utils.js";
-import {getLogs} from "./info_logs.js";
+import {getClicks, getLogs, ManageGame} from "./info_logs.js";
 import {END_COUNT} from "./consts.js";
+import {pokemons} from "./pokemons.js"
 
-let btnCharacter = document.querySelector('#btn-character');
-let btnEnemy = document.querySelector('#btn-enemy');
-let logInfo = document.querySelector('#logs');
+const startGameBtn = document.getElementById('btn-start');
+const stopGameBtn = document.getElementById('btn-stop');
+const resetGameBtn = document.getElementById('btn-reset');
 
-btnCharacter.addEventListener('click', function(){
-    const {changeLifes: changeLifesEnemy} = player2;
-    changeLifesEnemy.call(player2,randomCount(80), function(count){
-        console.log('Some change after change HP', count);
-        console.log(getLogs(player1,player2,count));
-    });
+
+let game = new ManageGame ({
+    name: "game"
 })
 
-btnEnemy.addEventListener('click', function(){
-    const {changeLifes: changeLifesCharacter} = player1;
-    changeLifesCharacter.call(player1,randomCount(80), function(count){
-        console.log('Some change after change HP', count);
-        console.log(getLogs(player1,player2,count));
-    });
-})
+startGameBtn.addEventListener('click', function () {
+    game.start();
+});
+
+stopGameBtn.addEventListener('click', function () {
+    game.stop();
+});
+
+resetGameBtn.addEventListener('click', function () {
+    game.reset();
+});
+
+// let btnCharacter = document.querySelector('#btn-player1');
+// let btnEnemy = document.querySelector('#btn-player2');
+
+
+// btnCharacter.addEventListener('click', function(){
+//     const {changeLifes: changeLifesEnemy} = player2;
+//     changeLifesEnemy.call(player2,randomCount(80), function(count){
+//         console.log('Some change after change HP', count);
+//         console.log(getLogs(player1,player2,count));
+//     });
+// })
+
+// btnEnemy.addEventListener('click', function(){
+//     const {changeLifes: changeLifesCharacter} = player1;
+//     changeLifesCharacter.call(player1,randomCount(80), function(count){
+//         console.log('Some change after change HP', count);
+//         console.log(getLogs(player1,player2,count));
+//     });
+// })
 
 function init (){
     progressState.call(player2);
@@ -38,7 +60,6 @@ export function lifeProgress (){
     this.remainLifes = this.hp.healthDefault + '/' + this.hp.damage;
    this.elHP.innerText = this.remainLifes;
 }
-
 
 export function lifeProgressScale (){
     let result = this.hp.damage/this.hp.healthDefault * 100;
@@ -60,5 +81,8 @@ export function changeLifes (count, cb){
     cb && cb (count);
     const log = isEnemy ? getLogs (this, player1, count) : getLogs(this, player2, count);
 }
+
+
+
 
 init();
