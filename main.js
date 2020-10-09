@@ -1,8 +1,8 @@
-import {player1, player2} from "./persons.js";
+import {player1, player2, Pokemon, pikachu} from "./persons.js";
 import {randomCount} from "./utils.js";
-import {getClicks, getLogs} from "./info_logs.js";
+import {getClicks, getLogs, ManageGame} from "./info_logs.js";
 import {END_COUNT} from "./consts.js";
-import {ManageGame} from './info_logs.js';
+import {pokemons} from "./pokemons.js"
 
 const startGameBtn = document.getElementById('btn-start');
 const stopGameBtn = document.getElementById('btn-stop');
@@ -57,10 +57,9 @@ export function progressState(){
 }
 
 export function lifeProgress (){
-    this.remainLifes = this + '/' + this.hp.damage;
+    this.remainLifes = this.hp.healthDefault + '/' + this.hp.damage;
    this.elHP.innerText = this.remainLifes;
 }
-
 
 export function lifeProgressScale (){
     let result = this.hp.damage/this.hp.healthDefault * 100;

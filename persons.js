@@ -2,7 +2,7 @@ import {lifeProgress, changeLifes, progressState, lifeProgressScale} from "./mai
 import {getClicks} from "./info_logs.js";
 import {pokemons} from "./pokemons.js"
 
-const pikachu = pokemons.find(item => item.name === 'Pikachu');
+export const pikachu = pokemons.find(item => item.name === 'Pikachu');
 
 
 export class Selectors {
@@ -24,7 +24,7 @@ export class Pokemon extends Selectors{
         this.remainLifes = null;
         this.counter = 0;
         this.attacks = attacks;
-        this.getClick = getClicks ();
+        this.getClick = getClicks();
     }
     lifeProgressScale() {
         return lifeProgressScale.call(this);
@@ -56,7 +56,6 @@ export const player2 = new Pokemon({
 })
 
 function getClickInfo(btn){
-    
 }
 
 
