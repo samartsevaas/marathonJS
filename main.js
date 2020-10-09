@@ -2,7 +2,28 @@ import {player1, player2} from "./persons.js";
 import {randomCount} from "./utils.js";
 import {getClicks, getLogs} from "./info_logs.js";
 import {END_COUNT} from "./consts.js";
+import {ManageGame} from './info_logs.js';
 
+const startGameBtn = document.getElementById('btn-start');
+const stopGameBtn = document.getElementById('btn-stop');
+const resetGameBtn = document.getElementById('btn-reset');
+
+
+let game = new ManageGame ({
+    name: "game"
+})
+
+startGameBtn.addEventListener('click', function () {
+    game.start();
+});
+
+stopGameBtn.addEventListener('click', function () {
+    game.stop();
+});
+
+resetGameBtn.addEventListener('click', function () {
+    game.reset();
+});
 
 // let btnCharacter = document.querySelector('#btn-player1');
 // let btnEnemy = document.querySelector('#btn-player2');
@@ -61,5 +82,8 @@ export function changeLifes (count, cb){
     cb && cb (count);
     const log = isEnemy ? getLogs (this, player1, count) : getLogs(this, player2, count);
 }
+
+
+
 
 init();

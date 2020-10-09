@@ -29,3 +29,20 @@ export function getLogs(firstPerson, secondPerson, count){
         return logs[randomCount(logs.length) -1];
     }
     
+    export class ManageGame {
+        constructor(name) {
+            this.name = name;
+        }
+    
+        start = () => {
+            console.log('start', name);
+        }
+    
+        stop = () => {
+            console.log('stop', name);
+        }
+    
+        reset= () => {
+            console.log('reset', name);
+        }
+    } 

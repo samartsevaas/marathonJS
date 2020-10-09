@@ -56,8 +56,7 @@ export const player2 = new Pokemon({
 })
 
 function getClickInfo(btn){
-    let innerText = btn.innerText;
-    return innerText = `${innerText}`;
+    
 }
 
 
