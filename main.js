@@ -1,13 +1,12 @@
-import {player1, player2, Pokemon, pikachu} from "./persons.js";
+import {player1, player2, control, Selectors} from "./persons.js";
 import {randomCount} from "./utils.js";
 import {getClicks, getLogs, ManageGame} from "./info_logs.js";
 import {END_COUNT} from "./consts.js";
-import {pokemons} from "./pokemons.js"
 
 const startGameBtn = document.getElementById('btn-start');
 const stopGameBtn = document.getElementById('btn-stop');
 const resetGameBtn = document.getElementById('btn-reset');
-
+const controlArray = control.querySelectorAll('.button');
 
 let game = new ManageGame ({
     name: "game"
@@ -71,18 +70,29 @@ export function changeLifes (count, cb){
     const isEnemy = this === player2;
     if (this.hp.damage < count || this.counter >= END_COUNT){
         this.hp.damage = 0
-        alert (this.name + ' ' + 'проиграл')
-        btnEnemy.disabled = true;
-        btnCharacter.disabled = true
+        alert (this.name + ' ' + 'проиграл');
+        controlArray.forEach( item => {
+            item.disabled = true;
+        })
     } else{
         this.hp.damage -=count;
     }
+
+    console.log(typeof(this.hp.damage))
+    if (this.hp.damage < 60  && this.hp.damage > 20 ){
+        this.elProgress.classList.add('low');
+    } else if (this.hp.damage < 20) {
+        this.elProgress.classList.remove('low');
+        this.elProgress.classList.add('critical');
+    }else {
+        this.elProgress.classList.remove('low');
+        this.elProgress.classList.remove('critical');
+    }
+
     this.progressState();
     cb && cb (count);
     const log = isEnemy ? getLogs (this, player1, count) : getLogs(this, player2, count);
 }
-
-
 
 
 init();

@@ -1,6 +1,7 @@
 import {lifeProgress, changeLifes, progressState, lifeProgressScale} from "./main.js";
 import {getClicks} from "./info_logs.js";
 import {pokemons} from "./pokemons.js"
+import { randomCount } from "./utils.js";
 
 export const pikachu = pokemons.find(item => item.name === 'Pikachu');
 
@@ -32,7 +33,7 @@ export class Pokemon extends Selectors{
     lifeProgress() {
         return lifeProgress.call(this);
     };
-    changeLifes(count = 20, cb) {
+    changeLifes(count, cb) {
         return changeLifes.call(this, count, cb);
     };
     progressState () {
@@ -56,18 +57,22 @@ export const player2 = new Pokemon({
 })
 
 function getClickInfo(btn){
+
 }
 
 
-const control = document.querySelector('.control');
+export const control = document.querySelector('.control');
 
 player1.attacks.forEach(item => {
     const btn = document.createElement('button');
     btn.classList.add('button');
-    btn.innerText = item.name;
+    btn.innerText = `${item.name} (${item.maxCount})`;
     const btnCount = getClicks(item.maxCount);
     btn.addEventListener('click', () => {
-        console.log(btnCount());
+        const getClicksMultiple = item.maxCount - btnCount();
+        btn.innerText = btn.innerText.replace(/\d+/g, getClicksMultiple);
+        const randomResult = randomCount(item.maxDamage, item.minDamage);
+        player1.changeLifes(randomResult);
     })
     control.appendChild(btn)
 })
